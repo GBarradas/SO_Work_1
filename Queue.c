@@ -10,7 +10,7 @@ typedef struct node *Node;
 typedef struct queue * Queue;
 
 struct node {
-    Process element;
+    int element;
     Node next;
 };
 struct queue{
@@ -64,10 +64,10 @@ Node atPos(Queue Q , int Position){
     }
     return aux;
 }
-Process getProcess(Node N){
+int getProcess(Node N){
     return N->element;
 }
-Node createNode(Process P){
+Node createNode(int  P){
     Node N = malloc(sizeof(Node));
     N->element=P;
     N->next=NULL;
@@ -76,7 +76,12 @@ Node createNode(Process P){
 
 
 void main(){
-    Process p;
-    Node n = createNode(p);
-    Queue q =InicializeQueue(n);
+   
+    Node p=createNode(0);
+    Queue q= InicializeQueue(p);
+    add(q,p);
+    p=createNode(20);
+    add(q,p);
+    printf("%d  %d\n",q->Head->element,q->Rear->element);
+
 }

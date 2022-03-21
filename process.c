@@ -5,5 +5,5 @@
 typedef struct process * Process;
 
 struct process{
-    
+    int a;
 };
