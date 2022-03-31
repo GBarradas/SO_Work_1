@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdbool.h>
 #include<stdlib.h>
-#include"process.c"
 #include"fatal.h"
 
 typedef bool Boolean;
@@ -9,14 +8,14 @@ typedef struct node *Node;
 typedef struct queue *Queue;
 
 struct node{
-    Process element;
+    Program element;
     Node *next;
 };
 
 struct queue{
     int size;
-    Node *Rear;
     Node *Head;
+    Node *Rear;
 };
 
 Queue inicializeQueue(){
@@ -31,7 +30,7 @@ Boolean isEmpty(Queue Q){
     return Q->size == 0;
 }
 
-void Enqueue(Process P, Queue Q){
+void Enqueue(Program P, Queue Q){
     Node N = malloc( sizeof(Node));
     Node aux;
     N->element = P;
@@ -49,7 +48,7 @@ void Enqueue(Process P, Queue Q){
     }
 }
 
-Process peek(Queue Q){
+Program peek(Queue Q){
     Node aux = Q->Head;
     return aux->element;
 }
