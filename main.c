@@ -338,9 +338,9 @@ int main() {
         else
            printf(" -P%d- |",i+1);
     }
-    printf("\n|-------|");
+    printf("\n|:-----:|");
     for( int i = 0; i < number_of_rows; ++i ){
-        printf("-------|");
+        printf(":-----:|");
     }
 
     OS.instant = 0;
