@@ -253,7 +253,7 @@ void run() {                                                                    
                 now = Op_sys.programs[id].now;
                 --Op_sys.programs[id].cycle[now];
             }
-            printf("%2d %2d ",now, Op_sys.programs[id].cycle[now] );
+            printf("%2d| %2d| ",now, Op_sys.programs[id].cycle[now] );
             printProgramState(getState(id));
             if(getState(id) == RUN){
                 programRunning = true;
@@ -282,7 +282,7 @@ void run() {                                                                    
                 numOfProgramsExecuting++;
         }
 
-        printf("%d\n",numOfProgramsExecuting);
+        printf("%d|\n",numOfProgramsExecuting);
 
                                                                                                    // Round Robin Standard (RR)
         if (!programRunning && !isEmpty(ready))                                                                      // If no programs are running and ready queue isn't empty --> change the state of the queue program
@@ -303,7 +303,7 @@ void run() {                                                                    
 
         ++Op_sys.instance;
         if (numOfProgramsExecuting == 0) {                                                                        // If there are no programs executing
-            printf(" %4d |", Op_sys.instance);
+            printf("%4d|", Op_sys.instance);
 
             for (int i = 0; i < Op_sys.numOfPrograms; i++)
                 printf("  ---  |");
@@ -336,6 +336,6 @@ void main(){
         }
     }
     SO copy = Op_sys;
-    printf("   instante|p1|p1-cycle|p1-sate|p2|p2-cycle|p2-sate|p3|p3-cycle|p3-sate|\n|-|-|-|-|-|-|-|-|-|-|\n");
+    printf("   instante|p1|p1-cycle|p1-sate|p2|p2-cycle|p2-sate|p3|p3-cycle|p3-sate|number of execut|\n|-|-|-|-|-|-|-|-|-|-|-|\n");
     run();
 }
