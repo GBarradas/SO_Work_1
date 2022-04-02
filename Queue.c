@@ -1,11 +1,12 @@
 #include<stdio.h>
 #include<stdbool.h>
 #include<stdlib.h>
-#include"fatal.h"
-
+#include"lib.h"
+#include"process.c"
 typedef bool Boolean;
 typedef struct node *Node;
 typedef struct queue *Queue;
+
 
 struct node{
     Program element;
