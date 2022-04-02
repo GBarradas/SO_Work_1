@@ -56,3 +56,5 @@ dkms.conf
 **/process
 **/autoPush.py
 **/ignore/
+**/out.md
+**/out
