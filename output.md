@@ -1,102 +1,101 @@
-|instante|p1|p1-cycle|p1-sate|p2|p2-cycle|p2-sate|p3|p3-cycle|p3-sate|number of execut|
+instante|p1|p1-cycle|p1-sate|p2|p2-cycle|p2-sate|p3|p3-cycle|p3-sate|number of execut|
 |-|-|-|-|-|-|-|-|-|-|-|
-1 | 0|  0|  NEW | 0|  0|      | 0|  2|      |3|
-2 | 1|  2|  RUN | 1|  4|  NEW | 0|  1|      |3|
-3 | 1|  1|  RUN | 1|  4| READY| 0|  0|      |3|
-4 | 1|  0|  RUN | 1|  3|  RUN | 1|  2|  NEW |3|
-5 | 1| -1|  RUN | 1|  2|  RUN | 1|  2| READY|3|
-6 | 1| -2|  RUN | 1|  1|  RUN | 1|  2| READY|3|
-7 | 1| -3|  RUN | 1|  0|  RUN | 1|  2| READY|3|
-8 | 1| -4|  RUN | 1| -1|  RUN | 1|  2| READY|3|
-9 | 1| -5|  RUN | 1| -2|  RUN | 1|  2| READY|3|
-10 | 1| -6|  RUN | 1| -3|  RUN | 1|  2| READY|3|
-11 | 1| -7|  RUN | 1| -4|  RUN | 1|  2| READY|3|
-12 | 1| -8|  RUN | 1| -5|  RUN | 1|  2| READY|3|
-13 | 1| -9|  RUN | 1| -6|  RUN | 1|  2| READY|3|
-14 | 1| -10|  RUN | 1| -7|  RUN | 1|  2| READY|3|
-15 | 1| -11|  RUN | 1| -8|  RUN | 1|  2| READY|3|
-16 | 1| -12|  RUN | 1| -9|  RUN | 1|  2| READY|3|
-17 | 1| -13|  RUN | 1| -10|  RUN | 1|  2| READY|3|
-18 | 1| -14|  RUN | 1| -11|  RUN | 1|  2| READY|3|
-19 | 1| -15|  RUN | 1| -12|  RUN | 1|  2| READY|3|
-20 | 1| -16|  RUN | 1| -13|  RUN | 1|  2| READY|3|
-21 | 1| -17|  RUN | 1| -14|  RUN | 1|  2| READY|3|
-22 | 1| -18|  RUN | 1| -15|  RUN | 1|  2| READY|3|
-23 | 1| -19|  RUN | 1| -16|  RUN | 1|  2| READY|3|
-24 | 1| -20|  RUN | 1| -17|  RUN | 1|  2| READY|3|
-25 | 1| -21|  RUN | 1| -18|  RUN | 1|  2| READY|3|
-26 | 1| -22|  RUN | 1| -19|  RUN | 1|  2| READY|3|
-27 | 1| -23|  RUN | 1| -20|  RUN | 1|  2| READY|3|
-28 | 1| -24|  RUN | 1| -21|  RUN | 1|  2| READY|3|
-29 | 1| -25|  RUN | 1| -22|  RUN | 1|  2| READY|3|
-30 | 1| -26|  RUN | 1| -23|  RUN | 1|  2| READY|3|
-31 | 1| -27|  RUN | 1| -24|  RUN | 1|  2| READY|3|
-32 | 1| -28|  RUN | 1| -25|  RUN | 1|  2| READY|3|
-33 | 1| -29|  RUN | 1| -26|  RUN | 1|  2| READY|3|
-34 | 1| -30|  RUN | 1| -27|  RUN | 1|  2| READY|3|
-35 | 1| -31|  RUN | 1| -28|  RUN | 1|  2| READY|3|
-36 | 1| -32|  RUN | 1| -29|  RUN | 1|  2| READY|3|
-37 | 1| -33|  RUN | 1| -30|  RUN | 1|  2| READY|3|
-38 | 1| -34|  RUN | 1| -31|  RUN | 1|  2| READY|3|
-39 | 1| -35|  RUN | 1| -32|  RUN | 1|  2| READY|3|
-40 | 1| -36|  RUN | 1| -33|  RUN | 1|  2| READY|3|
-41 | 1| -37|  RUN | 1| -34|  RUN | 1|  2| READY|3|
-42 | 1| -38|  RUN | 1| -35|  RUN | 1|  2| READY|3|
-43 | 1| -39|  RUN | 1| -36|  RUN | 1|  2| READY|3|
-44 | 1| -40|  RUN | 1| -37|  RUN | 1|  2| READY|3|
-45 | 1| -41|  RUN | 1| -38|  RUN | 1|  2| READY|3|
-46 | 1| -42|  RUN | 1| -39|  RUN | 1|  2| READY|3|
-47 | 1| -43|  RUN | 1| -40|  RUN | 1|  2| READY|3|
-48 | 1| -44|  RUN | 1| -41|  RUN | 1|  2| READY|3|
-49 | 1| -45|  RUN | 1| -42|  RUN | 1|  2| READY|3|
-50 | 1| -46|  RUN | 1| -43|  RUN | 1|  2| READY|3|
-51 | 1| -47|  RUN | 1| -44|  RUN | 1|  2| READY|3|
-52 | 1| -48|  RUN | 1| -45|  RUN | 1|  2| READY|3|
-53 | 1| -49|  RUN | 1| -46|  RUN | 1|  2| READY|3|
-54 | 1| -50|  RUN | 1| -47|  RUN | 1|  2| READY|3|
-55 | 1| -51|  RUN | 1| -48|  RUN | 1|  2| READY|3|
-56 | 1| -52|  RUN | 1| -49|  RUN | 1|  2| READY|3|
-57 | 1| -53|  RUN | 1| -50|  RUN | 1|  2| READY|3|
-58 | 1| -54|  RUN | 1| -51|  RUN | 1|  2| READY|3|
-59 | 1| -55|  RUN | 1| -52|  RUN | 1|  2| READY|3|
-60 | 1| -56|  RUN | 1| -53|  RUN | 1|  2| READY|3|
-61 | 1| -57|  RUN | 1| -54|  RUN | 1|  2| READY|3|
-62 | 1| -58|  RUN | 1| -55|  RUN | 1|  2| READY|3|
-63 | 1| -59|  RUN | 1| -56|  RUN | 1|  2| READY|3|
-64 | 1| -60|  RUN | 1| -57|  RUN | 1|  2| READY|3|
-65 | 1| -61|  RUN | 1| -58|  RUN | 1|  2| READY|3|
-66 | 1| -62|  RUN | 1| -59|  RUN | 1|  2| READY|3|
-67 | 1| -63|  RUN | 1| -60|  RUN | 1|  2| READY|3|
-68 | 1| -64|  RUN | 1| -61|  RUN | 1|  2| READY|3|
-69 | 1| -65|  RUN | 1| -62|  RUN | 1|  2| READY|3|
-70 | 1| -66|  RUN | 1| -63|  RUN | 1|  2| READY|3|
-71 | 1| -67|  RUN | 1| -64|  RUN | 1|  2| READY|3|
-72 | 1| -68|  RUN | 1| -65|  RUN | 1|  2| READY|3|
-73 | 1| -69|  RUN | 1| -66|  RUN | 1|  2| READY|3|
-74 | 1| -70|  RUN | 1| -67|  RUN | 1|  2| READY|3|
-75 | 1| -71|  RUN | 1| -68|  RUN | 1|  2| READY|3|
-76 | 1| -72|  RUN | 1| -69|  RUN | 1|  2| READY|3|
-77 | 1| -73|  RUN | 1| -70|  RUN | 1|  2| READY|3|
-78 | 1| -74|  RUN | 1| -71|  RUN | 1|  2| READY|3|
-79 | 1| -75|  RUN | 1| -72|  RUN | 1|  2| READY|3|
-80 | 1| -76|  RUN | 1| -73|  RUN | 1|  2| READY|3|
-81 | 1| -77|  RUN | 1| -74|  RUN | 1|  2| READY|3|
-82 | 1| -78|  RUN | 1| -75|  RUN | 1|  2| READY|3|
-83 | 1| -79|  RUN | 1| -76|  RUN | 1|  2| READY|3|
-84 | 1| -80|  RUN | 1| -77|  RUN | 1|  2| READY|3|
-85 | 1| -81|  RUN | 1| -78|  RUN | 1|  2| READY|3|
-86 | 1| -82|  RUN | 1| -79|  RUN | 1|  2| READY|3|
-87 | 1| -83|  RUN | 1| -80|  RUN | 1|  2| READY|3|
-88 | 1| -84|  RUN | 1| -81|  RUN | 1|  2| READY|3|
-89 | 1| -85|  RUN | 1| -82|  RUN | 1|  2| READY|3|
-90 | 1| -86|  RUN | 1| -83|  RUN | 1|  2| READY|3|
-91 | 1| -87|  RUN | 1| -84|  RUN | 1|  2| READY|3|
-92 | 1| -88|  RUN | 1| -85|  RUN | 1|  2| READY|3|
-93 | 1| -89|  RUN | 1| -86|  RUN | 1|  2| READY|3|
-94 | 1| -90|  RUN | 1| -87|  RUN | 1|  2| READY|3|
-95 | 1| -91|  RUN | 1| -88|  RUN | 1|  2| READY|3|
-96 | 1| -92|  RUN | 1| -89|  RUN | 1|  2| READY|3|
-97 | 1| -93|  RUN | 1| -90|  RUN | 1|  2| READY|3|
-98 | 1| -94|  RUN | 1| -91|  RUN | 1|  2| READY|3|
-99 | 1| -95|  RUN | 1| -92|  RUN | 1|  2| READY|3|
-100 | 1| -96|  RUN | 1| -93|  RUN | 1|  2| READY|3|
+1 | 0|  0|  NEW | 0|  0|      | 0|  2|      |3 0 3|
+2 | 1|  2|  RUN | 1|  4|  NEW | 0|  1|      |3 1 2|
+3 | 1|  1|  RUN | 1|  4| READY| 0|  0|      |3 1 1|
+4 | 1|  0|  RUN | 1|  4| READY| 1|  2|  NEW |3 1 0|
+5 | 0|  0| READY| 1|  3|  RUN | 1|  2| READY|3 1 2|
+6 | 0|  0| READY| 1|  2|  RUN | 1|  2| READY|3 1 1|
+7 | 0|  0| READY| 1|  1|  RUN | 1|  2| READY|3 1 0|
+8 | 1| -1|  RUN | 1|  1| READY| 1|  2| READY|3 1 2|
+9 | 1| -2|  RUN | 1|  1| READY| 1|  2| READY|3 1 1|
+10 | 1| -3|  RUN | 1|  1| READY| 1|  2| READY|3 1 0|
+11 | 0|  0| READY| 0|  0| READY| 1|  1|  RUN |3 1 2|
+12 | 1| -3| READY| 1|  1| READY| 1|  0|  RUN |3 1 1|
+13 | 1| -3| READY| 1|  1| READY| 1| -1|  RUN |3 1 0|
+14 | 1| -3| READY| 1|  0|  RUN | 1| -1| READY|3 1 2|
+15 | 0|  0| READY| 1| -1|  RUN | 1| -1| READY|3 1 1|
+16 | 0|  0| READY| 1| -2|  RUN | 1| -1| READY|3 1 0|
+17 | 1| -4|  RUN | 1| -2| READY| 1| -1| READY|3 1 2|
+18 | 1| -5|  RUN | 1| -2| READY| 1| -1| READY|3 1 1|
+19 | 1| -6|  RUN | 1| -2| READY| 1| -1| READY|3 1 0|
+20 | 0|  0| READY| 0|  0| READY| 1| -2|  RUN |3 1 2|
+21 | 1| -6| READY| 1| -2| READY| 1| -3|  RUN |3 1 1|
+22 | 1| -6| READY| 1| -2| READY| 1| -4|  RUN |3 1 0|
+23 | 1| -6| READY| 1| -3|  RUN | 1| -4| READY|3 1 2|
+24 | 0|  0| READY| 1| -4|  RUN | 1| -4| READY|3 1 1|
+25 | 0|  0| READY| 1| -5|  RUN | 1| -4| READY|3 1 0|
+26 | 1| -7|  RUN | 1| -5| READY| 1| -4| READY|3 1 2|
+27 | 1| -8|  RUN | 1| -5| READY| 1| -4| READY|3 1 1|
+28 | 1| -9|  RUN | 1| -5| READY| 1| -4| READY|3 1 0|
+29 | 0|  0| READY| 0|  0| READY| 1| -5|  RUN |3 1 2|
+30 | 1| -9| READY| 1| -5| READY| 1| -6|  RUN |3 1 1|
+31 | 1| -9| READY| 1| -5| READY| 1| -7|  RUN |3 1 0|
+32 | 1| -9| READY| 1| -6|  RUN | 1| -7| READY|3 1 2|
+33 | 0|  0| READY| 1| -7|  RUN | 1| -7| READY|3 1 1|
+34 | 0|  0| READY| 1| -8|  RUN | 1| -7| READY|3 1 0|
+35 | 1| -10|  RUN | 1| -8| READY| 1| -7| READY|3 1 2|
+36 | 1| -11|  RUN | 1| -8| READY| 1| -7| READY|3 1 1|
+37 | 1| -12|  RUN | 1| -8| READY| 1| -7| READY|3 1 0|
+38 | 0|  0| READY| 0|  0| READY| 1| -8|  RUN |3 1 2|
+39 | 1| -12| READY| 1| -8| READY| 1| -9|  RUN |3 1 1|
+40 | 1| -12| READY| 1| -8| READY| 1| -10|  RUN |3 1 0|
+41 | 1| -12| READY| 1| -9|  RUN | 1| -10| READY|3 1 2|
+42 | 0|  0| READY| 1| -10|  RUN | 1| -10| READY|3 1 1|
+43 | 0|  0| READY| 1| -11|  RUN | 1| -10| READY|3 1 0|
+44 | 1| -13|  RUN | 1| -11| READY| 1| -10| READY|3 1 2|
+45 | 1| -14|  RUN | 1| -11| READY| 1| -10| READY|3 1 1|
+46 | 1| -15|  RUN | 1| -11| READY| 1| -10| READY|3 1 0|
+47 | 0|  0| READY| 0|  0| READY| 1| -11|  RUN |3 1 2|
+48 | 1| -15| READY| 1| -11| READY| 1| -12|  RUN |3 1 1|
+49 | 1| -15| READY| 1| -11| READY| 1| -13|  RUN |3 1 0|
+50 | 1| -15| READY| 1| -12|  RUN | 1| -13| READY|3 1 2|
+51 | 0|  0| READY| 1| -13|  RUN | 1| -13| READY|3 1 1|
+52 | 0|  0| READY| 1| -14|  RUN | 1| -13| READY|3 1 0|
+53 | 1| -16|  RUN | 1| -14| READY| 1| -13| READY|3 1 2|
+54 | 1| -17|  RUN | 1| -14| READY| 1| -13| READY|3 1 1|
+55 | 1| -18|  RUN | 1| -14| READY| 1| -13| READY|3 1 0|
+56 | 0|  0| READY| 0|  0| READY| 1| -14|  RUN |3 1 2|
+57 | 1| -18| READY| 1| -14| READY| 1| -15|  RUN |3 1 1|
+58 | 1| -18| READY| 1| -14| READY| 1| -16|  RUN |3 1 0|
+59 | 1| -18| READY| 1| -15|  RUN | 1| -16| READY|3 1 2|
+60 | 0|  0| READY| 1| -16|  RUN | 1| -16| READY|3 1 1|
+61 | 0|  0| READY| 1| -17|  RUN | 1| -16| READY|3 1 0|
+62 | 1| -19|  RUN | 1| -17| READY| 1| -16| READY|3 1 2|
+63 | 1| -20|  RUN | 1| -17| READY| 1| -16| READY|3 1 1|
+64 | 1| -21|  RUN | 1| -17| READY| 1| -16| READY|3 1 0|
+65 | 0|  0| READY| 0|  0| READY| 1| -17|  RUN |3 1 2|
+66 | 1| -21| READY| 1| -17| READY| 1| -18|  RUN |3 1 1|
+67 | 1| -21| READY| 1| -17| READY| 1| -19|  RUN |3 1 0|
+68 | 1| -21| READY| 1| -18|  RUN | 1| -19| READY|3 1 2|
+69 | 0|  0| READY| 1| -19|  RUN | 1| -19| READY|3 1 1|
+70 | 0|  0| READY| 1| -20|  RUN | 1| -19| READY|3 1 0|
+71 | 1| -22|  RUN | 1| -20| READY| 1| -19| READY|3 1 2|
+72 | 1| -23|  RUN | 1| -20| READY| 1| -19| READY|3 1 1|
+73 | 1| -24|  RUN | 1| -20| READY| 1| -19| READY|3 1 0|
+74 | 0|  0| READY| 0|  0| READY| 1| -20|  RUN |3 1 2|
+75 | 1| -24| READY| 1| -20| READY| 1| -21|  RUN |3 1 1|
+76 | 1| -24| READY| 1| -20| READY| 1| -22|  RUN |3 1 0|
+77 | 1| -24| READY| 1| -21|  RUN | 1| -22| READY|3 1 2|
+78 | 0|  0| READY| 1| -22|  RUN | 1| -22| READY|3 1 1|
+79 | 0|  0| READY| 1| -23|  RUN | 1| -22| READY|3 1 0|
+80 | 1| -25|  RUN | 1| -23| READY| 1| -22| READY|3 1 2|
+81 | 1| -26|  RUN | 1| -23| READY| 1| -22| READY|3 1 1|
+82 | 1| -27|  RUN | 1| -23| READY| 1| -22| READY|3 1 0|
+83 | 0|  0| READY| 0|  0| READY| 1| -23|  RUN |3 1 2|
+84 | 1| -27| READY| 1| -23| READY| 1| -24|  RUN |3 1 1|
+85 | 1| -27| READY| 1| -23| READY| 1| -25|  RUN |3 1 0|
+86 | 1| -27| READY| 1| -24|  RUN | 1| -25| READY|3 1 2|
+87 | 0|  0| READY| 1| -25|  RUN | 1| -25| READY|3 1 1|
+88 | 0|  0| READY| 1| -26|  RUN | 1| -25| READY|3 1 0|
+89 | 1| -28|  RUN | 1| -26| READY| 1| -25| READY|3 1 2|
+90 | 1| -29|  RUN | 1| -26| READY| 1| -25| READY|3 1 1|
+91 | 1| -30|  RUN | 1| -26| READY| 1| -25| READY|3 1 0|
+92 | 0|  0| READY| 0|  0| READY| 1| -26|  RUN |3 1 2|
+93 | 1| -30| READY| 1| -26| READY| 1| -27|  RUN |3 1 1|
+94 | 1| -30| READY| 1| -26| READY| 1| -28|  RUN |3 1 0|
+95 | 1| -30| READY| 1| -27|  RUN | 1| -28| READY|3 1 2|
+96 | 0|  0| READY| 1| -28|  RUN | 1| -28| READY|3 1 1|
+97 | 0|  0| READY| 1| -29|  RUN | 1| -28| READY|3 1 0|
+98 | 1| -31|  RUN | 1| -29| READY| 1| -28| READY|3 1 2|
+99 | 1| -32|  RUN | 1| -29| READY| 1| -28| READY|3 1 1|

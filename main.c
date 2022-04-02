@@ -239,13 +239,13 @@ void run() {                                                                    
     Op_sys.instance = 1;
     int quantum_program = Op_sys.quantum_time;
     int now;
+    SO copy = Op_sys;
     while (Op_sys.instance != 0) {
-        Boolean programRunning = 0;
+        Boolean programRunning = false;
         int numOfProgramsExecuting = 0;
         int program_Running;
-
         printf(" %4d |", Op_sys.instance);
-
+        copy = Op_sys;
         for (int id = 0; id < Op_sys.numOfPrograms; ++id) {
             if(getState(id) == RUN ||
             getState(id) == NONCREATE ||
@@ -258,31 +258,32 @@ void run() {                                                                    
             if(getState(id) == RUN){
                 programRunning = true;
                 --quantum_program;
-                programRunning = id;
+                program_Running = id;
             }
 
     
         }
+        copy = Op_sys;
 
-        for (int id = 0; id < Op_sys.numOfPrograms; id++) {
+        for (int id = 0; id < Op_sys.numOfPrograms; ++id) {
             now = Op_sys.programs[id].now;
             if (getState(id) == EXIT)                                                                                 // If program is exiting --> terminate the program
                 change(id);
 
 
-            if (Op_sys.programs[id].cycle[now] == 0 && getState(id) == RUN) {                                    // If program cycle is 0 and program state is running --> change the state of the program                                                                                   // Round Robin Standard (RR)
+            if (Op_sys.programs[id].cycle[now] <= 0 && getState(id) == RUN) {                                    // If program cycle is 0 and program state is running --> change the state of the program                                                                                   // Round Robin Standard (RR)
                     if (isEmpty(ready))                                                                                 // If ready queue is empty
                         programRunning = false;
             }
 
-            if (Op_sys.programs[id].cycle[now] == 0 && getState(id) == BLOCKED)                                      // If program cycle is 0 and program state is blocked --> change the state of the program
+            if (Op_sys.programs[id].cycle[now] <= 0 && getState(id) == BLOCKED)                                      // If program cycle is 0 and program state is blocked --> change the state of the program
                 change(id);
 
             if (getState(id) != FINISH)                                                                                 // If program isn't finished --> increment numOfProgramsExecuting variable
                 numOfProgramsExecuting++;
         }
 
-        printf("%d|\n",numOfProgramsExecuting);
+        printf("%d %d %d|\n",numOfProgramsExecuting,programRunning, quantum_program);
 
                                                                                                    // Round Robin Standard (RR)
         if (!programRunning && !isEmpty(ready))                                                                      // If no programs are running and ready queue isn't empty --> change the state of the queue program
@@ -303,7 +304,7 @@ void run() {                                                                    
 
         ++Op_sys.instance;
         if (numOfProgramsExecuting == 0) {                                                                        // If there are no programs executing
-            printf("%4d|", Op_sys.instance);
+            printf("%d|", Op_sys.instance);
 
             for (int i = 0; i < Op_sys.numOfPrograms; i++)
                 printf("  ---  |");
