@@ -1,101 +1,36 @@
-instante|p1|p1-cycle|p1-sate|p2|p2-cycle|p2-sate|p3|p3-cycle|p3-sate|number of execut|
-|-|-|-|-|-|-|-|-|-|-|-|
-1 | 0|  0|  NEW | 0|  0|      | 0|  2|      |3 0 3|
-2 | 1|  2|  RUN | 1|  4|  NEW | 0|  1|      |3 1 2|
-3 | 1|  1|  RUN | 1|  4| READY| 0|  0|      |3 1 1|
-4 | 1|  0|  RUN | 1|  4| READY| 1|  2|  NEW |3 1 0|
-5 | 0|  0| READY| 1|  3|  RUN | 1|  2| READY|3 1 2|
-6 | 0|  0| READY| 1|  2|  RUN | 1|  2| READY|3 1 1|
-7 | 0|  0| READY| 1|  1|  RUN | 1|  2| READY|3 1 0|
-8 | 1| -1|  RUN | 1|  1| READY| 1|  2| READY|3 1 2|
-9 | 1| -2|  RUN | 1|  1| READY| 1|  2| READY|3 1 1|
-10 | 1| -3|  RUN | 1|  1| READY| 1|  2| READY|3 1 0|
-11 | 0|  0| READY| 0|  0| READY| 1|  1|  RUN |3 1 2|
-12 | 1| -3| READY| 1|  1| READY| 1|  0|  RUN |3 1 1|
-13 | 1| -3| READY| 1|  1| READY| 1| -1|  RUN |3 1 0|
-14 | 1| -3| READY| 1|  0|  RUN | 1| -1| READY|3 1 2|
-15 | 0|  0| READY| 1| -1|  RUN | 1| -1| READY|3 1 1|
-16 | 0|  0| READY| 1| -2|  RUN | 1| -1| READY|3 1 0|
-17 | 1| -4|  RUN | 1| -2| READY| 1| -1| READY|3 1 2|
-18 | 1| -5|  RUN | 1| -2| READY| 1| -1| READY|3 1 1|
-19 | 1| -6|  RUN | 1| -2| READY| 1| -1| READY|3 1 0|
-20 | 0|  0| READY| 0|  0| READY| 1| -2|  RUN |3 1 2|
-21 | 1| -6| READY| 1| -2| READY| 1| -3|  RUN |3 1 1|
-22 | 1| -6| READY| 1| -2| READY| 1| -4|  RUN |3 1 0|
-23 | 1| -6| READY| 1| -3|  RUN | 1| -4| READY|3 1 2|
-24 | 0|  0| READY| 1| -4|  RUN | 1| -4| READY|3 1 1|
-25 | 0|  0| READY| 1| -5|  RUN | 1| -4| READY|3 1 0|
-26 | 1| -7|  RUN | 1| -5| READY| 1| -4| READY|3 1 2|
-27 | 1| -8|  RUN | 1| -5| READY| 1| -4| READY|3 1 1|
-28 | 1| -9|  RUN | 1| -5| READY| 1| -4| READY|3 1 0|
-29 | 0|  0| READY| 0|  0| READY| 1| -5|  RUN |3 1 2|
-30 | 1| -9| READY| 1| -5| READY| 1| -6|  RUN |3 1 1|
-31 | 1| -9| READY| 1| -5| READY| 1| -7|  RUN |3 1 0|
-32 | 1| -9| READY| 1| -6|  RUN | 1| -7| READY|3 1 2|
-33 | 0|  0| READY| 1| -7|  RUN | 1| -7| READY|3 1 1|
-34 | 0|  0| READY| 1| -8|  RUN | 1| -7| READY|3 1 0|
-35 | 1| -10|  RUN | 1| -8| READY| 1| -7| READY|3 1 2|
-36 | 1| -11|  RUN | 1| -8| READY| 1| -7| READY|3 1 1|
-37 | 1| -12|  RUN | 1| -8| READY| 1| -7| READY|3 1 0|
-38 | 0|  0| READY| 0|  0| READY| 1| -8|  RUN |3 1 2|
-39 | 1| -12| READY| 1| -8| READY| 1| -9|  RUN |3 1 1|
-40 | 1| -12| READY| 1| -8| READY| 1| -10|  RUN |3 1 0|
-41 | 1| -12| READY| 1| -9|  RUN | 1| -10| READY|3 1 2|
-42 | 0|  0| READY| 1| -10|  RUN | 1| -10| READY|3 1 1|
-43 | 0|  0| READY| 1| -11|  RUN | 1| -10| READY|3 1 0|
-44 | 1| -13|  RUN | 1| -11| READY| 1| -10| READY|3 1 2|
-45 | 1| -14|  RUN | 1| -11| READY| 1| -10| READY|3 1 1|
-46 | 1| -15|  RUN | 1| -11| READY| 1| -10| READY|3 1 0|
-47 | 0|  0| READY| 0|  0| READY| 1| -11|  RUN |3 1 2|
-48 | 1| -15| READY| 1| -11| READY| 1| -12|  RUN |3 1 1|
-49 | 1| -15| READY| 1| -11| READY| 1| -13|  RUN |3 1 0|
-50 | 1| -15| READY| 1| -12|  RUN | 1| -13| READY|3 1 2|
-51 | 0|  0| READY| 1| -13|  RUN | 1| -13| READY|3 1 1|
-52 | 0|  0| READY| 1| -14|  RUN | 1| -13| READY|3 1 0|
-53 | 1| -16|  RUN | 1| -14| READY| 1| -13| READY|3 1 2|
-54 | 1| -17|  RUN | 1| -14| READY| 1| -13| READY|3 1 1|
-55 | 1| -18|  RUN | 1| -14| READY| 1| -13| READY|3 1 0|
-56 | 0|  0| READY| 0|  0| READY| 1| -14|  RUN |3 1 2|
-57 | 1| -18| READY| 1| -14| READY| 1| -15|  RUN |3 1 1|
-58 | 1| -18| READY| 1| -14| READY| 1| -16|  RUN |3 1 0|
-59 | 1| -18| READY| 1| -15|  RUN | 1| -16| READY|3 1 2|
-60 | 0|  0| READY| 1| -16|  RUN | 1| -16| READY|3 1 1|
-61 | 0|  0| READY| 1| -17|  RUN | 1| -16| READY|3 1 0|
-62 | 1| -19|  RUN | 1| -17| READY| 1| -16| READY|3 1 2|
-63 | 1| -20|  RUN | 1| -17| READY| 1| -16| READY|3 1 1|
-64 | 1| -21|  RUN | 1| -17| READY| 1| -16| READY|3 1 0|
-65 | 0|  0| READY| 0|  0| READY| 1| -17|  RUN |3 1 2|
-66 | 1| -21| READY| 1| -17| READY| 1| -18|  RUN |3 1 1|
-67 | 1| -21| READY| 1| -17| READY| 1| -19|  RUN |3 1 0|
-68 | 1| -21| READY| 1| -18|  RUN | 1| -19| READY|3 1 2|
-69 | 0|  0| READY| 1| -19|  RUN | 1| -19| READY|3 1 1|
-70 | 0|  0| READY| 1| -20|  RUN | 1| -19| READY|3 1 0|
-71 | 1| -22|  RUN | 1| -20| READY| 1| -19| READY|3 1 2|
-72 | 1| -23|  RUN | 1| -20| READY| 1| -19| READY|3 1 1|
-73 | 1| -24|  RUN | 1| -20| READY| 1| -19| READY|3 1 0|
-74 | 0|  0| READY| 0|  0| READY| 1| -20|  RUN |3 1 2|
-75 | 1| -24| READY| 1| -20| READY| 1| -21|  RUN |3 1 1|
-76 | 1| -24| READY| 1| -20| READY| 1| -22|  RUN |3 1 0|
-77 | 1| -24| READY| 1| -21|  RUN | 1| -22| READY|3 1 2|
-78 | 0|  0| READY| 1| -22|  RUN | 1| -22| READY|3 1 1|
-79 | 0|  0| READY| 1| -23|  RUN | 1| -22| READY|3 1 0|
-80 | 1| -25|  RUN | 1| -23| READY| 1| -22| READY|3 1 2|
-81 | 1| -26|  RUN | 1| -23| READY| 1| -22| READY|3 1 1|
-82 | 1| -27|  RUN | 1| -23| READY| 1| -22| READY|3 1 0|
-83 | 0|  0| READY| 0|  0| READY| 1| -23|  RUN |3 1 2|
-84 | 1| -27| READY| 1| -23| READY| 1| -24|  RUN |3 1 1|
-85 | 1| -27| READY| 1| -23| READY| 1| -25|  RUN |3 1 0|
-86 | 1| -27| READY| 1| -24|  RUN | 1| -25| READY|3 1 2|
-87 | 0|  0| READY| 1| -25|  RUN | 1| -25| READY|3 1 1|
-88 | 0|  0| READY| 1| -26|  RUN | 1| -25| READY|3 1 0|
-89 | 1| -28|  RUN | 1| -26| READY| 1| -25| READY|3 1 2|
-90 | 1| -29|  RUN | 1| -26| READY| 1| -25| READY|3 1 1|
-91 | 1| -30|  RUN | 1| -26| READY| 1| -25| READY|3 1 0|
-92 | 0|  0| READY| 0|  0| READY| 1| -26|  RUN |3 1 2|
-93 | 1| -30| READY| 1| -26| READY| 1| -27|  RUN |3 1 1|
-94 | 1| -30| READY| 1| -26| READY| 1| -28|  RUN |3 1 0|
-95 | 1| -30| READY| 1| -27|  RUN | 1| -28| READY|3 1 2|
-96 | 0|  0| READY| 1| -28|  RUN | 1| -28| READY|3 1 1|
-97 | 0|  0| READY| 1| -29|  RUN | 1| -28| READY|3 1 0|
-98 | 1| -31|  RUN | 1| -29| READY| 1| -28| READY|3 1 2|
-99 | 1| -32|  RUN | 1| -29| READY| 1| -28| READY|3 1 1|
+|Instate| -P01- | -P02- | -P03- |
+|-------|-------|-------|-------|
+|     1 |  NEW  |       |       |
+|     2 |  RUN  |  NEW  |       |
+|     3 |  RUN  | READY |       |
+|     4 |  RUN  | READY |  NEW  |
+|     5 | BLOCK |  RUN  | READY |
+|     6 | READY |  RUN  | READY |
+|     7 | READY |  RUN  | READY |
+|     8 | READY | READY |  RUN  |
+|     9 | READY | READY |  RUN  |
+|    10 |  RUN  | READY | BLOCK |
+|    11 |  RUN  | READY | READY |
+|    12 | BLOCK |  RUN  | READY |
+|    13 | BLOCK | BLOCK |  RUN  |
+|    14 | READY | BLOCK |  RUN  |
+|    15 | READY | BLOCK |  RUN  |
+|    16 |  RUN  | READY | READY |
+|    17 |  RUN  | READY | READY |
+|    18 |  RUN  | READY | READY |
+|    19 | READY |  RUN  | READY |
+|    20 | READY |  RUN  | READY |
+|    21 | READY |  RUN  | READY |
+|    22 | READY | READY |  RUN  |
+|    23 | READY | READY |  RUN  |
+|    24 | READY | READY |  RUN  |
+|    25 |  RUN  | READY | BLOCK |
+|    26 |  EXIT |  RUN  | READY |
+|    27 | ----- | BLOCK |  RUN  |
+|    28 | ----- | READY |  RUN  |
+|    29 | ----- | READY |  RUN  |
+|    30 | ----- |  RUN  | BLOCK |
+|    31 | ----- |  EXIT | READY |
+|    32 | ----- | ----- |  RUN  |
+|    33 | ----- | ----- |  EXIT |
+|    34 | ----- | ----- | ----- |

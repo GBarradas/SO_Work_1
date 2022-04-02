@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
-#include "lib.h"
-
+#define QUEUE_SIZE 10000
 typedef bool Boolean;
-typedef struct node *Node;
-typedef struct queue Queue;
-typedef struct program Program;
 typedef struct so SO;
 
 enum States
@@ -21,321 +16,343 @@ enum States
 
 };
 
-struct program
-{
-    int id;
-    int now;
-    enum States state;
-    int timeToStart;
-    int cycle[10];
-};
+typedef struct {
+    int now;                                                                                                           // index of the program sub-cycle that is currently in
+    int state;
+    int start;                                                                                                          // starting instant of time
+    int cycle[11];
+} program; 
 
-struct so
-{
-    int instance;
-    int numOfPrograms;
+struct so{
+    int instant;
+    int number_of_programs;
     int quantum_time;
-    int ready[10];
+    program programs[11];
+
+    int ready_queue[QUEUE_SIZE];
     int ready_front;
-    int ready_rear;
-    int ready_size;
-    Program programs[10];
+    int ready_tail;                                                               
+    int block_queue[QUEUE_SIZE];
+    int block_front;
+    int block_tail;                                                               
 };
 
-struct node
-{
-    int porogram_id;
-    Node *next;
-};
+SO OS;
 
-/*struct queue
-{
-    int size;
-    int Head;
-    int Rear;
-    Program elements[10];
-};*/
-SO OperatingSystem;
-
-void inicializeReady(){
-    OperatingSystem.ready_front = 0;
-    OperatingSystem.ready_rear = 0;
-    OperatingSystem.ready_size = 0;
+int front(int queue_number) {                                                                                           // returns the element on the first position of the queue
+    if (queue_number == 0) {                                                                                            // ready queue
+        if (OS.ready_front != -1)
+            return OS.ready_queue[OS.ready_front];
+    } else if (queue_number == 1) {                                                                                     // block queue
+        if (OS.block_front != -1)
+            return OS.block_queue[OS.block_front];
+    } 
+    return -1;
 }
 
-
-Boolean readyIsEmpty()
-{
-    return OperatingSystem.ready_size == 0;
+int getState(int id){
+    return OS.programs[id].state;
 }
 
-void EnqueueReady(Program P) 
-{
-    OperatingSystem.ready[OperatingSystem.ready_rear] = P.id;
-    ++OperatingSystem.ready_rear;
-    ++OperatingSystem.ready_size;
+void setState(int id, int state){
+    OS.programs[id].state = state;
 }
 
-Program peekReady()
-{
-    if (!readyIsEmpty())
-    {
-        return OperatingSystem.programs[OperatingSystem.ready[0]];
+void enqueue(int id, int queue_number) {                                                                             // places the element passed as argument on the last position of the queue
+    if (queue_number == 0) {                                                                                            // ready queue
+        if (OS.ready_tail == QUEUE_SIZE - 1)
+            return;
+
+        if (OS.ready_front == -1)
+            OS.ready_front = 0;
+
+        ++OS.ready_tail;
+        OS.ready_queue[OS.ready_tail] = id;
+    } else if (queue_number == 1) {                                                                                     // block queue
+        if (OS.block_tail == QUEUE_SIZE - 1)
+            return;
+
+        if (OS.block_front == -1)
+            OS.block_front = 0;
+        ++OS.block_tail;
+        OS.block_queue[OS.block_tail] = id;
     }
 }
 
-Program DequeueReady()
-{
-    if (!readyIsEmpty())
-    {
-        Program aux = peekReady();
-        for (int i = 0; i < OperatingSystem.ready_rear - 1; ++i)
-        {
-            OperatingSystem.ready[i] = OperatingSystem.ready[i + 1];
+int dequeue(int queue_number) {                                                                                         // returns the element in the first position of the queue and removes it
+    int aux;
+    if (queue_number == 0) {                                                                                            // ready queue
+        if (OS.ready_front == -1)
+            return -1;
+
+        aux = OS.ready_queue[OS.ready_front];
+        ++OS.ready_front;
+
+        if (OS.ready_front > OS.ready_tail) {
+            OS.ready_front = -1;
+            OS.ready_tail = -1;
         }
+
+        return aux;
+    } else if (queue_number == 1) {                                                                                     // block queue
+        if (OS.block_front == -1)
+            return -1;
+
+        aux = OS.block_queue[OS.block_front];
+        ++OS.block_front;
+
+        if (OS.block_front > OS.block_tail) {
+            OS.block_front = -1;
+            OS.block_tail = -1;
+        }
+
         return aux;
     }
+    return -1;
 }
 
+void state_change(int id) {                                                                         // Makes a change from a state to another to the program passed as argument
+    int currently_running;
+    int aux;
+    switch (getState(id)) {
+        case 0:                                                                                                         // Exit
+            setState(id, 6);                                                                             // EXT --> --- (finished program)
 
-void change(Program P)
-{
-    
-
-        Boolean current_running;
-
-        Program aux;
-        switch (P.state)
-        {
-        case READY:
-            DequeueReady();
-            P.state = RUN;
-            ++P.now;
             break;
-        case RUN:
-            if (P.cycle[P.now + 1] == 0)
-            {
-                P.state = FINISH;
-            }
-            else
-            {
-                // Enqueue(P, block);
-                P.state = BLOCKED;
-                P.now++;
-            }
-            if (!readyIsEmpty())
-            {
-                aux = DequeueReady();
-                aux.state = RUN;
-                ++aux.now;
-            }
+        case 1:                                                                                                         // Ready
+            dequeue(0);
+            setState(id, 2);                                                                             // RDY --> RUN
+            ++OS.programs[id].now;
+
             break;
-        case BLOCKED:
-           
-                P.state = READY;
-                EnqueueReady(P);
+        case 2:                                                                                                         // Run                                                                                         // Round Robin Standard (RR)
+                if (OS.programs[id].cycle[OS.programs[id].now + 1] == 0)
+                    setState(id, 0);                                                                     // RUN --> EXT
+                else {
+                    enqueue(id, 1);
+                    setState(id, 3);                                                                     // RUN --> BLK
+                    ++OS.programs[id].now;
+                }
+
+                aux = front(0);
+
+                if (aux != -1) {
+                    dequeue(0);
+                    setState(aux, 2);                                                                            // RDY --> RUN
+                    ++OS.programs[aux].now;
+                }
             
             break;
-        case NEW:
-            current_running = false;
-            for (int i = 0; i < OperatingSystem.numOfPrograms; ++i)
-            {
-                if (OperatingSystem.programs[i].state == RUN)
-                {
-                    current_running = true;
-                }
+
+        case 3:                                                                                                         // Block                                                                                         // Round Robin Standard (RR)
+            aux = dequeue(1);
+            if (aux != -1) {
+                setState(aux, 1);                                                                            // BLK --> RDY
+                enqueue(aux, 0);
             }
-            if (!current_running)
-            {
-                P.state = RUN;
-                ++P.now;
-            }
-            else
-            {
-                P.state = READY;
-                EnqueueReady(P);
-            }
+            
+
             break;
-        case NONCREATE:
-            P.state = NEW;
+        case 4:                                                                                                         // (not created program)
+            setState(id, 5);                                                                             //     --> NEW
+
+            break;
+        case 5:                                                                                                          // New
+            currently_running = 0;
+            for (int i = 0; i < OS.number_of_programs; ++i) {
+                if (getState(i) == 2)
+                    currently_running=1;
+            }
+            if(currently_running==0){
+                setState(id, 2);
+                ++OS.programs[id].now;
+            } else{
+                setState(id, 1);                                                                         // NEW --> RDY
+                enqueue(id, 0);
+            }
+
+            break;
+        case 7:                                                                                                         // Aux
+            if (front(2) != -1) {
+                aux = dequeue(2);
+                setState(aux, 2);                                                                                // AUX --> RUN
+                ++OS.programs[aux].now;
+            } else {
+                dequeue(0);
+                setState(id, 2);                                                                         // RDY --> RUN
+                ++OS.programs[id].now;
+            }
+
             break;
         default:
             break;
-        }
-    
-}
-
-void change_quantum(Program P)
-{
-    // printf("quatum change-%d\n",P.id);
-    Program aux;
-    if (!readyIsEmpty())
-    {
-        aux = DequeueReady();
-        aux.state = RUN;
-        ++aux.now;
-        EnqueueReady(P);
-        P.state = READY;
-        --P.now;
     }
 }
 
-void printProgramState(enum States state)
+void quantum_change(int id) {                                                                       // makes the change from RUN to RDY when a program has spent all of its quantum time in the programor
+    int ready = front(0);                                                                                            // Round Robin Standard (RR)
+    if (ready != -1) {
+        dequeue(0);
+        setState(ready, 2);                                                                                  // RDY --> RUN
+        ++OS.programs[ready].now;
+        enqueue(id, 0);
+        setState(id, 1);                                                                             // RUN --> RDY
+        OS.programs[id].now--;
+    }
+   
+}
+
+void printProgramState(int state)
 {
     switch (state)
     {
-    case NEW:
-        printf(" NEW |");
+    case 5:
+        printf("  NEW  |");
         break;
-    case READY:
-        printf("READY|");
+    case 1:
+        printf(" READY |");
         break;
-    case RUN:
-        printf(" RUN |");
+    case 2:
+        printf("  RUN  |");
         break;
-    case BLOCKED:
-        printf("BLOCK|");
+    case 3:
+        printf(" BLOCK |");
         break;
-    case EXIT:
-        printf(" EXIT|");
+    case 0:
+        printf("  EXIT |");
         break;
-    case FINISH:
-        printf("-----|");
+    case 6:
+        printf(" ----- |");
         break;
-    case NONCREATE:
-        printf("     |");
+    case 4:
+        printf("       |");
         break;
     default:
         break;
     }
 }
 
-void run()
-{
-    printf("2ning\n");
-    for (int i = 0; i < OperatingSystem.numOfPrograms; ++i)
-    {
-        Program P = OperatingSystem.programs[i];
-        if (P.timeToStart == 0)
-        {
-            P.state = NEW;
-        }
-    }
-    SO copy = OperatingSystem;
-    OperatingSystem.instance = 1;
-    int quantum_program = OperatingSystem.quantum_time;
-    while (OperatingSystem.instance != 0)
-    {
-        copy = OperatingSystem;
-        Boolean program_running = false;
-        int numOfProgramsExecuting = 0;
-        Program programRunning;
-        Program P;
-        printf("%2d|", OperatingSystem.instance);
+void run() {                                                                                // simulates the running of the 5 state model and prints every instant's information
+    for (int i = 0; i < OS.number_of_programs; ++i)
+        if (OS.programs[i].start == 0)
+            setState(i, 5);
 
-        for (int i = 0; i < OperatingSystem.numOfPrograms; ++i)
-        {
-            P = OperatingSystem.programs[i];
+    OS.instant = 1;
+    int quantum_unity = OS.quantum_time;
 
-            //printf("%d %d", P.now, P.id);
-            //(programs[i].state == 2) || (front(1) == i && programs[i].state == 3)
-            if (P.state == RUN ||  P.state == BLOCKED) // pode faltar uma condição
-                --P.cycle[P.now];
-            
-            printProgramState(P.state);
-            if (P.state == RUN)
-            {
-                program_running = true;
-                --quantum_program;
-                programRunning = P;
+    while (OS.instant != 0) {
+        Boolean is_running = false;
+        int number_of_executing_programs = 0;
+        int running_program;
+
+        printf(" %4d |", OS.instant);
+
+        for (int i = 0; i < OS.number_of_programs; ++i) {
+
+            if ((getState(i) == 2) || (front(1) == i && getState(i) == 3))                                  // If program is running or program is blocked --> decrement program block cycle
+                OS.programs[i].cycle[OS.programs[i].now]--;
+
+            printProgramState(getState(i));
+            if(getState(i) == 2){
+            is_running = true;
+            quantum_unity--;
+            running_program = i;
             }
+
         }
         printf("\n");
-        for (int i = 0; i < OperatingSystem.numOfPrograms; ++i)
-        {
-            P = OperatingSystem.programs[i];
-            if (P.cycle[P.now] == 0 && P.state == RUN)
-            {
-                if (readyIsEmpty())
-                    program_running = false;
-                change(P);
-                quantum_program = OperatingSystem.quantum_time;
+
+        for (int i = 0; i < OS.number_of_programs; ++i) {
+
+            if (getState(i) == 0)                                                                                 // If program is exiting --> terminate the program
+                state_change(i);
+
+
+            if (OS.programs[i].cycle[OS.programs[i].now] == 0 && getState(i) == 2) {                                    // If program cycle is 0 and program state is running --> change the state of the program                                                                                      // Round Robin Standard (RR)
+                if (front(0) == -1)                                                                                 // If ready queue is empty
+                    is_running = true;
+                state_change(i);
+                quantum_unity = OS.quantum_time;
             }
-            if (P.cycle[P.now] == 0 && P.state == BLOCKED)
-                change(P);
-            if (P.state != FINISH)
-                ++numOfProgramsExecuting;
+
+            if (OS.programs[i].cycle[OS.programs[i].now] == 0 && getState(i) == 3)                                      // If program cycle is 0 and program state is blocked --> change the state of the program
+                state_change(i);
+
+            if (getState(i) != 6)                                                                                 // If program isn't finished --> increment number_of_executing_programs variable
+                ++number_of_executing_programs;
         }
 
-        if (!program_running && !readyIsEmpty())
-            change(peekReady());
-        if (quantum_program == 0)
-        {
-            change_quantum(programRunning);
-            quantum_program = OperatingSystem.quantum_time;
+
+                                                                                             // Round Robin Standard (RR)
+        if (!is_running && front(0) != -1)                                                                      // If no programs are running and ready queue isn't empty --> change the state of the queue program
+            state_change(front(0));
+
+      
+
+        if (quantum_unity == 0) {                                                                                       // If the quantum cycle ends --> change running program and reset quantum cycle
+            quantum_change(running_program);
+            quantum_unity = OS.quantum_time;
         }
 
-        for (int i = 0; i < OperatingSystem.numOfPrograms; ++i)
-        {
-            P = OperatingSystem.programs[i];
-            if (P.state == NEW)
-                change(P);
-            if (P.timeToStart == OperatingSystem.instance && P.state == NONCREATE)
-                change(P);
+        for (int i = 0; i < OS.number_of_programs; ++i) {
+            if (getState(i) == 5)                                                                                 // If program is new --> put the program in ready queue
+                state_change(i);
+
+            if (OS.programs[i].start == OS.instant && getState(i) == 4)                                                 // If program isn't created --> create the program
+                state_change(i);
         }
-        OperatingSystem.instance++;
-        if (numOfProgramsExecuting == 0)
-        {
-            printf("   %2d|", OperatingSystem.instance);
-            for (int i = 0; i < OperatingSystem.numOfPrograms; ++i)
-            {
-                printf("-----|");
-            }
-            OperatingSystem.instance = 0;
+
+        ++OS.instant;
+        if (number_of_executing_programs == 0) {                                                                        // If there are no programs executing
+            printf(" %4d |", OS.instant);
+
+            for (int i = 0; i < OS.number_of_programs; ++i)
+                printf(" ----- |");
+
+            OS.instant = 0;
         }
+
     }
+
+    printf("\n");
 }
 
-void main()
-{
-    printf("hello");
-    int programas[3][10] = {
-        {0, 3, 1, 2, 2, 4, 0, 0, 0, 0},
-        {1, 4, 2, 4, 1, 1, 0, 0, 0, 0},
-        {3, 2, 1, 6, 1, 3, 1, 1, 0, 0}};
-    int rows = 3;
-    int cols = 10;
 
-    OperatingSystem.numOfPrograms = rows;
-    OperatingSystem.quantum_time = 3;
-    inicializeReady();
-    
-    for (int i = 0; i < rows; ++i)
-    {
-        Program P ;
-        P.id = i; // para remover
-        P.now = 0;
-        P.state = NONCREATE;
-        for (int j = 0; j < 10; ++j)
-        {
-            //P.cycle[j] = malloc(sizeof(int));
-            P.cycle[j] = (int)programas[i][j];
-        }
-        P.timeToStart = P.cycle[0];
-        OperatingSystem.programs[i] = P;
+
+int main() {
+    int programas[3][10] = {
+ {0, 3, 1, 2, 2, 4, 0, 0, 0, 0 } ,
+ {1, 4, 2, 4, 1, 1, 0, 0, 0, 0 } ,
+ {3, 2, 1, 6, 1, 3, 1, 1, 0, 0 } };
+    int number_of_rows = sizeof(programas) / sizeof(programas[0]);
+    int number_of_columns = sizeof(programas[0]) / sizeof(programas[0][0]);
+
+    OS.quantum_time = 3;
+    OS.number_of_programs = number_of_rows;
+    OS.block_front = -1;
+    OS.block_tail = -1;
+    OS.ready_front = -1;
+    OS.ready_tail = -1;
+    printf("Instate|");
+
+    for (int i = 0; i < number_of_rows; ++i) {
+        OS.programs[i].now = 0;
+        setState(i, 4);
+
+        for (int j = 0; j < number_of_columns; ++j)
+            OS.programs[i].cycle[j] = programas[i][j];
+
+        OS.programs[i].start = OS.programs[i].cycle[0];
     }
-    printf("%d %d %d\n", OperatingSystem.instance, OperatingSystem.numOfPrograms, OperatingSystem.quantum_time);
-    for (int i = 0; i < OperatingSystem.numOfPrograms; ++i)
-    {
-        Program P = OperatingSystem.programs[i];
-        printf("%d %d-%d - ", P.id, P.timeToStart, P.now);
-        for (int j = 0; j < 10; ++j)
-        {
-            printf("%d ", P.cycle[j]);
-        }
-        printf("\n");
+    for( int i = 0; i < number_of_columns; ++i ){
+
     }
-    SO copy = OperatingSystem;
-    printf("2\n");
+
+    OS.instant = 0;
+
+    printf("\n");
+
     run();
+
+    return 0;
 }
