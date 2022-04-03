@@ -1,50 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
-#define QUEUE_SIZE 500
-typedef bool Boolean;
-typedef struct so SO;
-typedef struct queues Queue;
-typedef struct program Program;
-
-enum Queues{ready, block};
-enum States
-{
-    EXIT,
-    READY,
-    RUN,
-    BLOCKED,
-    NONCREATE,
-    NEW,
-    FINISH,
-
-};
-
-struct program{
-    int now;                                                                                                          
-    int state;
-    int start;                                                                                                          
-    int cycle[11];
-}; 
-
-struct queues{
-    int readyPrograms[QUEUE_SIZE];
-    int readyFront;
-    int readyRear;                                                               
-    int blockPrograms[QUEUE_SIZE];
-    int blockFront;
-    int blockRear;                                                               
-
-};
-
-struct so{
-    int instante;
-    int numOfPrograms;
-    int quantumTime;
-    Program programs[11];
-    Queue queues;
-};
+#include "main.h"
 
 SO OS;
+
 Boolean isEmpty(enum Queues Q){
     if(Q == ready)
         return OS.queues.readyFront == -1;
@@ -123,9 +82,11 @@ enum States getState(int id){
 void setState(int id, enum States state){
     OS.programs[id].state = state;
 }
+
 int getCycle(int id, int Position){
     return OS.programs[id].cycle[Position];
 }
+
 int getNow(int id){
     return OS.programs[id].now;
 }
@@ -199,13 +160,12 @@ void quantumChangeProgram(int id) {
         ++OS.programs[aux].now;
         enqueue(id, ready );
         setState(id, READY);                          
-        OS.programs[id].now--;
+        --OS.programs[id].now;
     }
    
 }
 
-void printProgramState(enum States state)
-{
+void printProgramState(enum States state) {
     switch (state)
     {
     case NEW:
@@ -254,12 +214,12 @@ void run() {
                 --OS.programs[i].cycle[0];
             }
             if ((getState(i) == RUN) || (peek(block) == i && getState(i) == BLOCKED))      
-                OS.programs[i].cycle[getNow(i)]--;
+                --OS.programs[i].cycle[getNow(i)];
 
             printProgramState(getState(i));
             if(getState(i) == RUN){
             isProgramRunning = true;
-            quantumProgram--;
+            --quantumProgram;
             runningProgram = i;
             }
 
@@ -302,22 +262,20 @@ void run() {
                 changeProgram(i);
         }
 
-        ++OS.instante;
         if (numOfExecutinfPrograms == 0) {                                                             
-            printf("|    %2d |", OS.instante);
+            printf("|    %2d |", ++OS.instante);
 
             for (int i = 0; i < OS.numOfPrograms; ++i)
                 printf(" ----- |");
 
             break;
         }
+        ++OS.instante;
 
     }
 
     printf("\n");
 }
-
-
 
 int main() {
     int programas[3][10] = {
@@ -361,4 +319,5 @@ int main() {
     printf("\n");
 
     run();
+    printf("  \n---  \n# Execution Finish!!  \n");
 }
