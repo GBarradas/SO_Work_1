@@ -35,11 +35,13 @@ struct queues{
 };
 
 struct so{
+
     int instante;
     int numOfPrograms;
     int quantumTime;
     Program programs[11];
     Queue queues;
+    Boolean isRR;
 };
 
 Boolean isEmpty(enum Queues Q);

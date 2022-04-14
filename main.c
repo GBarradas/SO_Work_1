@@ -219,8 +219,10 @@ void run() {
             printProgramState(getState(i));
             if(getState(i) == RUN){
             isProgramRunning = true;
-            --quantumProgram;
-            runningProgram = i;
+                if(OS.isRR){
+                --quantumProgram;
+                runningProgram = i;
+                }
             }
 
         }
@@ -235,7 +237,8 @@ void run() {
                 if (isEmpty(ready))                                              
                     isProgramRunning = true;
                 changeProgram(i);
-                quantumProgram = OS.quantumTime;
+                if(OS.isRR)
+                    quantumProgram = OS.quantumTime;
             }
 
             if (getCycle(i,getNow(i)) == 0 && getState(i) == BLOCKED)         
@@ -249,7 +252,7 @@ void run() {
 
       
 
-        if (quantumProgram == 0) {                                                                                  
+        if (OS.isRR && quantumProgram == 0) {                                                                                  
             quantumChangeProgram(runningProgram);
             quantumProgram = OS.quantumTime;
         }
@@ -315,7 +318,7 @@ int main() {
     }
 
     OS.instante = 0;
-
+    OS.isRR = true;
     printf("\n");
 
     run();
