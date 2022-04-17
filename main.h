@@ -4,8 +4,8 @@ typedef struct so SO;
 typedef struct queues Queue;
 typedef struct program Program;
 
-enum Queues{ready, block};
-enum States
+enum Queues{ready, block};  //2 queues que existem
+enum States         //Varios estados que um processo pode tomar
 {
     EXIT,
     READY,
@@ -17,14 +17,14 @@ enum States
 
 };
 
-struct program{
-    int now;                                                                                                          
-    int state;
-    int start;                                                                                                          
-    int cycle[11];
+struct program{         //process
+    int now;                      //posição do array(cycle) em que se encontra                                                                                       
+    enum States state;                      //estado em que esta
+    int start;                              //ciclo em que começa
+    int cycle[11];                          //array do programa que é lido na main do main.c
 }; 
 
-struct queues{
+struct queues{                          //queues array e posição do 1º elemento de cada queue e do ultimo
     int readyPrograms[QUEUE_SIZE];
     int readyFront;
     int readyRear;                                                               
@@ -34,16 +34,16 @@ struct queues{
 
 };
 
-struct so{
+struct so{                  // struct do sisOpe guarda tudo o que é necessario para o So
 
-    int instante;
-    int numOfPrograms;
-    int quantumTime;
-    Program programs[11];
-    Queue queues;
-    Boolean isRR;
+    int instante;               //instante do So
+    int numOfPrograms;           
+    int quantumTime;            // quantum time para o round Robin
+    Program programs[11];       //Todos os programas do So
+    Queue queues;                 //Queues do so
+    Boolean isRR;                  //Diz nos se é Round Robin ou se é FIFO
 };
-
+                //Funções usadas e declaradas em main.c
 Boolean isEmpty(enum Queues Q);
 int peek(enum Queues Q);
 void enqueue(int id, enum Queues Q);
