@@ -17,11 +17,10 @@ enum States         //Varios estados que um processo pode tomar
 
 };
 
-struct program{         //process
+struct program{                     // struct de um programa
     int now;                      //posição do array(cycle) em que se encontra                                                                                       
-    enum States state;                      //estado em que esta
-    int start;                              //ciclo em que começa
-    int cycle[11];                          //array do programa que é lido na main do main.c
+    enum States state;                      //estado em que esta o programa
+    int cycle[10];                          //array do programa que é lido na main.c
 }; 
 
 struct queues{                          //queues array e posição do 1º elemento de cada queue e do ultimo
@@ -34,13 +33,13 @@ struct queues{                          //queues array e posição do 1º elemen
 
 };
 
-struct so{                  // struct do sisOpe guarda tudo o que é necessario para o So
+struct so{                  // struct do Sistema Operativo guarda tudo o que é necessario para o SO
 
     int instante;               //instante do So
-    int numOfPrograms;           
+    int numOfPrograms;           //numero de Programas
     int quantumTime;            // quantum time para o round Robin
-    Program programs[11];       //Todos os programas do So
-    Queue queues;                 //Queues do so
+    Program programs[11];       //Todos os programas do SO
+    Queue queues;                 //Queues do SO
     Boolean isRR;                  //Diz nos se é Round Robin ou se é FIFO
 };
                 //Funções usadas e declaradas em main.c
