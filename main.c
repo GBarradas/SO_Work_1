@@ -2,16 +2,16 @@
 #include <stdbool.h>
 #include "main.h"
 
-SO OS;
+SO OS;              //Crear SO
 
-Boolean isEmpty(enum Queues Q){
+Boolean isEmpty(enum Queues Q){     //Verifica se queues a queue esta vazia
     if(Q == ready)
         return OS.queues.readyFront == -1;
     else if(Q == block)
         return OS.queues.blockFront == -1;
 }
 
-int peek(enum Queues Q) {                                                                                          
+int peek(enum Queues Q) {                   //devolve o primeiro elemento dda queue                                                                        
     if (Q == ready) {                                                                                          
         if (!isEmpty(ready))
             return OS.queues.readyPrograms[OS.queues.readyFront];
@@ -22,7 +22,7 @@ int peek(enum Queues Q) {
     return -1;
 }
 
-void enqueue(int id, enum Queues Q) {                                                                            
+void enqueue(int id, enum Queues Q) {                        //coloca um emento na queue                                                    
     if (Q == ready) {                                                                                           
         if (OS.queues.readyRear == QUEUE_SIZE - 1)
             return;
@@ -43,7 +43,7 @@ void enqueue(int id, enum Queues Q) {
     }
 }
 
-int dequeue(enum Queues Q) {                                                                                        
+int dequeue(enum Queues Q) {                //retira um processo da queue                                                                        
     int aux;
     if (Q == ready) {                                                                                           
         if (isEmpty(ready))
@@ -75,53 +75,53 @@ int dequeue(enum Queues Q) {
     return -1;
 }
 
-enum States getState(int id){
+enum States getState(int id){       //devolve o estado de um processo
     return OS.programs[id].state;
 }
 
-void setState(int id, enum States state){
+void setState(int id, enum States state){       //define o estado de um processo
     OS.programs[id].state = state;
 }
 
-int getCycle(int id, int Position){
+int getCycle(int id, int Position){             //devolve o valor do ciclo em que o processo se encontra
     return OS.programs[id].cycle[Position];
 }
 
-int getNow(int id){
+int getNow(int id){                             //devolve o a posição do ciclo em que o processo se encontra agora
     return OS.programs[id].now;
 }
 
-void changeProgram(int id) {
+void changeProgram(int id) {            //função que analiza o estado atual e muda o estado
     Boolean programRunning = false;
     int aux;
     switch (getState(id)) {
-        case EXIT:                      
+        case EXIT:                      //processo terminou
             setState(id, FINISH);   
 
             break;
-        case READY:                                                                                                        
+        case READY:                    //ready-> Run                                                                                           
             dequeue(0);
             setState(id, RUN);                                                                             
             ++OS.programs[id].now;
 
             break;
         case RUN:                                                                                                       
-            if (getCycle(id,getNow(id)+1) == 0)
+            if (getCycle(id,getNow(id)+1) == 0)     //caso proximo ciclo igual a 0 o processo terminou e vai para exit
                 setState(id, EXIT);
-            else {
+            else {                          //Casos contrario o processo vai para block
                 enqueue(id, block);
                 setState(id, BLOCKED);
                 ++OS.programs[id].now;
             }
-            if (!isEmpty(ready)) {
-                aux = dequeue(ready);
+            if (!isEmpty(ready)) {          //caso a queue ready não esteja vazia
+                aux = dequeue(ready);       // vamos por um processo de ready em run
                 setState(aux, RUN);                                                                            
                 ++OS.programs[aux].now;
             }
             break;
 
-        case BLOCKED:                                                                                   
-            if (!isEmpty(block)) {
+        case BLOCKED:                                                                                      
+            if (!isEmpty(block)) {          //passa de block para ready
                 aux = dequeue(block);
                 setState(aux, READY);                                                                            
                 enqueue(aux, ready);
@@ -129,7 +129,7 @@ void changeProgram(int id) {
             
 
             break;
-        case NONCREATE:                                                                                        
+        case NONCREATE:                         //processo não existe e passa a NEW                                                                  
             setState(id, NEW);                                                                      
 
             break;
@@ -137,12 +137,12 @@ void changeProgram(int id) {
             programRunning = 0;
             for (int i = 0; i < OS.numOfPrograms; ++i) {
                 if (getState(i) == RUN)
-                    programRunning=true;
+                    programRunning=true;                //determina se existe algum processo em RUN
             }
-            if(!programRunning){
+            if(!programRunning){            // se não houver o processo passa automaticamente oara RUN
                 setState(id, RUN);
                 ++OS.programs[id].now;
-            } else{
+            } else{                     //caso contario passa paraa a queue ready
                 setState(id, READY);                                  
                 enqueue(id, ready);
             }
@@ -153,7 +153,7 @@ void changeProgram(int id) {
     }
 }
 
-void quantumChangeProgram(int id) {                                                                   
+void quantumChangeProgram(int id) {                        //mudança ocorre quando um processo esta mais o quantum time no processador                                           
     if (!isEmpty(ready)) {
         int aux = dequeue(ready);
         setState(aux, RUN);                   
@@ -165,7 +165,7 @@ void quantumChangeProgram(int id) {
    
 }
 
-void printProgramState(enum States state) {
+void printProgramState(enum States state) {         //Print estados
     switch (state)
     {
     case NEW:
@@ -194,10 +194,10 @@ void printProgramState(enum States state) {
     }
 }
 
-void run() {                                                                             
+void run() {                                        //responsavel pela execução dos processos
     for (int i = 0; i < OS.numOfPrograms; ++i)
         if (getCycle(i,0) == 0)
-            setState(i, NEW);
+            setState(i, NEW);               //inicializa os processos que ja pode ser executados
 
     OS.instante = 1;
     int quantumProgram = OS.quantumTime;
@@ -209,9 +209,9 @@ void run() {
 
         printf("|    %2d |", OS.instante);
 
-        for (int i = 0; i < OS.numOfPrograms; ++i) {
+        for (int i = 0; i < OS.numOfPrograms; ++i) {        //printar todos os processos
             if(getState(i) == NONCREATE && getNow(i) ==0 ){
-                --OS.programs[i].cycle[0];
+                --OS.programs[i].cycle[0];                  //decrementar o ciclo atual
             }
             if ((getState(i) == RUN) || (peek(block) == i && getState(i) == BLOCKED))      
                 --OS.programs[i].cycle[getNow(i)];
@@ -219,7 +219,7 @@ void run() {
             printProgramState(getState(i));
             if(getState(i) == RUN){
             isProgramRunning = true;
-                if(OS.isRR){
+                if(OS.isRR){        // caso RR e program == RUN decrementar o quantum do processo atual
                 --quantumProgram;
                 runningProgram = i;
                 }
@@ -228,12 +228,12 @@ void run() {
         }
         printf("\n");
 
-        for (int i = 0; i < OS.numOfPrograms; ++i) {
+        for (int i = 0; i < OS.numOfPrograms; ++i) {    //analisar e trocar o estados dos programas
 
             if (getState(i) == EXIT)                                                                                
-                changeProgram(i);
+                changeProgram(i);               //caso no estado Exit -> FINISH
 
-            if (getCycle(i,getNow(i)) == 0 && getState(i) == RUN) {                                    
+            if (getCycle(i,getNow(i)) == 0 && getState(i) == RUN) {       //caso o ciclo run tenha chegado ao fim                              
                 if (isEmpty(ready))                                              
                     isProgramRunning = true;
                 changeProgram(i);
@@ -241,36 +241,35 @@ void run() {
                     quantumProgram = OS.quantumTime;
             }
 
-            if (getCycle(i,getNow(i)) == 0 && getState(i) == BLOCKED)         
+            if (getCycle(i,getNow(i)) == 0 && getState(i) == BLOCKED)     //caso o ciclo block tenha chegado ao fim
                 changeProgram(i);
 
             if (getState(i) != FINISH)                                                     
                 ++numOfExecutinfPrograms;
         }
-        if (!isProgramRunning && !isEmpty(ready))                                                                     
+        if (!isProgramRunning && !isEmpty(ready))                   //caso não haja programa em run e haja programas em ready vamos colocar esse processo em run                                                     
             changeProgram(peek(0));
 
       
 
-        if (OS.isRR && quantumProgram == 0) {                                                                                  
+        if (OS.isRR && quantumProgram == 0) {                //rest quantum_time                                                                  
             quantumChangeProgram(runningProgram);
             quantumProgram = OS.quantumTime;
         }
 
         for (int i = 0; i < OS.numOfPrograms; ++i) {
-            if (getState(i) == 5)                          
+            if (getState(i) == NEW)                 //caso new mudar estado         
                 changeProgram(i);
 
-            if (getCycle(i,0) == 0 && getState(i) == NONCREATE)                                        
+            if (getCycle(i,0) == 0 && getState(i) == NONCREATE)      // caso esteja no instate do processo entrar no processador                                  
                 changeProgram(i);
         }
 
-        if (numOfExecutinfPrograms == 0) {                                                             
-            break;
-            //printf("|    %2d |", ++OS.instante);
-
-            //for (int i = 0; i < OS.numOfPrograms; ++i)
-            //    printf(" ----- |");
+        if (numOfExecutinfPrograms == 0) {                      //caso o numero de programa executando seja 0                                       
+           // printf("|    %2d |", ++OS.instante);
+                                                                //printa um ultimo instante e termina
+           // for (int i = 0; i < OS.numOfPrograms; ++i)
+           //     printf(" ----- |");
 
         }
         ++OS.instante;
@@ -281,15 +280,15 @@ void run() {
 }
 
 int main() {
-    int programas[3][10] = {
+    int programas[3][10] = {            //programas dados pelo stor
         {0, 3, 1, 2, 2, 4, 0, 0, 0, 0 } ,
         {1, 4, 2, 4, 1, 1, 0, 0, 0, 0 } ,
         {3, 2, 1, 6, 1, 3, 1, 1, 0, 0 } 
     };
-    int rows = sizeof(programas) / sizeof(programas[0]);
-    int cols = sizeof(programas[0]) / sizeof(programas[0][0]);
+    int rows = 3;       
+    int cols = 10;
 
-    OS.quantumTime = 3;
+    OS.quantumTime = 3;         //inicializar o SO
     OS.numOfPrograms = rows;
     OS.queues.blockFront = -1;
     OS.queues.blockRear = -1;
@@ -299,10 +298,10 @@ int main() {
 //         " -P0%- |"
     for (int i = 0; i < rows; ++i) {
         OS.programs[i].now = 0;
-        setState(i, 4);
+        setState(i, 4);             //set all program states to NOTCREATE
 
         for (int j = 0; j < cols; ++j)
-            OS.programs[i].cycle[j] = programas[i][j];
+            OS.programs[i].cycle[j] = programas[i][j];      //passar o ciclo para o prcesso
 
         OS.programs[i].start = OS.programs[i].cycle[0];
     }
