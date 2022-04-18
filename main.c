@@ -100,7 +100,7 @@ void changeProgram(int id) {            //função que analiza o estado atual e 
 
             break;
         case READY:                    //ready-> Run                                                                                           
-            dequeue(0);
+            dequeue(ready);
             setState(id, RUN);                                                                             
             ++OS.programs[id].now;
 
@@ -248,7 +248,7 @@ void run() {                                        //responsavel pela execuçã
                 ++numOfExecutinfPrograms;
         }
         if (!isProgramRunning && !isEmpty(ready))                   //caso não haja programa em run e haja programas em ready vamos colocar esse processo em run                                                     
-            changeProgram(peek(0));
+            changeProgram(peek(ready));
 
       
 
@@ -265,7 +265,8 @@ void run() {                                        //responsavel pela execuçã
                 changeProgram(i);
         }
 
-        if (numOfExecutinfPrograms == 0) {                      //caso o numero de programa executando seja 0                                       
+        if (numOfExecutinfPrograms == 0) { 
+            break;                     //caso o numero de programa executando seja 0                                       
            // printf("|    %2d |", ++OS.instante);
                                                                 //printa um ultimo instante e termina
            // for (int i = 0; i < OS.numOfPrograms; ++i)
