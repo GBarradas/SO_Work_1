@@ -266,12 +266,12 @@ void run() {
         }
 
         if (numOfExecutinfPrograms == 0) {                                                             
-            printf("|    %2d |", ++OS.instante);
-
-            for (int i = 0; i < OS.numOfPrograms; ++i)
-                printf(" ----- |");
-
             break;
+            //printf("|    %2d |", ++OS.instante);
+
+            //for (int i = 0; i < OS.numOfPrograms; ++i)
+            //    printf(" ----- |");
+
         }
         ++OS.instante;
 
