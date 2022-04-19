@@ -14,8 +14,8 @@ Por exemplo 2,3,5,3,1,3,1 significa que o processo (quando chegar a sua vez) fic
 Considere os processos definidos pelos seguintes pseudo-programas que iniciam no instante indicado em programas[i][0](ou seja o instante inicial de P1 é 0, o instante inicial de P2 é 1 e o de P3 é 3, )  
 exemplo:  
 int programas[3][10] = {     {0, 3, 1, 2, 2, 4, 0, 0, 0, 0 } ,  
-\hspace{0.5ex}  {1, 4, 2, 4, 1, 1, 0, 0, 0, 0 } ,   
-{3, 2, 1, 6, 1, 3, 1, 1, 0, 0 } };  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{1, 4, 2, 4, 1, 1, 0, 0, 0, 0 } ,   
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{3, 2, 1, 6, 1, 3, 1, 1, 0, 0 } };  
 Note que  a partir de certa altura o programa tem sempre zeros (um ou mais zeros). Isso significa que após o último valor diferente de zero (o qual representa tempo de CPU) o processo passa para oestado EXIT e termina.  
 Implemente um simulador dos processos neste sistema tendo em consideração que:  
 1. Admite-se que a mudança entre estados é infinitamente rápida; depois os processos ficam nos diversos estados 1 instante de tempo, seguindo-se outra mudança de estados, e assim sucessivamente.  
