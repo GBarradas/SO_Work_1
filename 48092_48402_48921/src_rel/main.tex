@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[a4paper, total={16cm, 24cm}]{geometry}
+\usepackage{url}
+%---------------------------------------------------------------%
+\newcommand{\UC}{Sistemas Operativos}
+\newcommand{\Licenciatura}{Engenharia Informática}
+\newcommand{\work}{1º Trabalho - Modelo de 5 Estados}
+\newcommand{\docente}{Luís Rato}
+%---------------------------------------------------------------%
+\fancypagestyle{indice}{
+\fancyhf{}
+\lhead{\includegraphics[scale=0.3]{imagens/logo.png} }
+\rhead{U.C. \UC\\
+\textbf{\work}}
+}
+%---------------------------------------------------------------%
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\includegraphics[scale=0.3]{imagens/logo.png} }
+\rhead{U.C. \UC\\
+\textbf{\work}}
+\rfoot{\thepage}
+\setlength{\headheight}{1.5cm}
+%---------------------------------------------------------------%
+\title{ \includegraphics[scale=0.3]{imagens/uevora.png}\\
+\vspace{1.0cm}
+\paragraph{}
+U.C. Sistemas Operativos\\
+Licenciatura em Engenharia Informática\\
+\vspace{0.5cm}
+\paragraph{}
+\textbf{\work}}
+%---------------------------------------------------------------%
+\author{
+\vspace{0.5 cm}
+\textbf{Docente: }\docente\\
+\hspace{1.95 cm} \textbf{Discentes: } André Baião 48092\\
+\hspace{5.35 cm} Gonçalo Barradas 48402\\
+\hspace{5.1 cm} Guilherme Grilo 48921
+}
+
+\date{abril 2022}
+
+%---------------------------------------------------------------%
+%                          Documento                            %
+%---------------------------------------------------------------%
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage
+%---------------------------------------------------------------%
+\setcounter{page}{1}
+\begin{center}
+    \section*{Introdução}
+\end{center}
+\paragraph{}
+Um Sistema Operativo é um programa que tem como função controlar os recursos dos programas em execução. Este fornece uma interface entre os programas e o hardware da máquina.
+Existem vários tipos de sistemas, sendo abordado neste trabalho o sistema de multiprocessamento, que consiste em recorrer a mais do que um processador de maneira a controlar o dispositivo em questão, isto é, cada processador contém uma cópia do próprio Sistema Operativo e as cópias comunicam entre si de forma a coordenar as diferentes operações de cada uma. O Multiprocessamento divide cada tarefa em várias subtarefas e atribui cada uma destas a um processador disponível, tornando mais rápida a execução das mesmas. 
+\vspace{-0.3cm}
+\paragraph{}
+As vantagens de utilizar um Sistema Operativo com Multi-processamento são a confiabilidade, a rapidez do processo e a diminuição do custo, pois as tarefas podem ser distribuídas por todos os processadores e no caso de um processador falhar, a subtarefa é transferida para outro processador, quanto maior o número de processadores, mais tarefas conseguem ser executadas em menos tempo e como os sistemas que contém mais de um processador partilham periféricos, memória, etc..., entre si, estes são relativamente mais baratos do que sistemas com apenas um processador.
+Um processo pode ser classificado como um programa ou instância de um programa em execução, uma entidade que pode aceder ou ser executada no processador ou com uma atividade caracterizada por uma única sequência de \emph{threads} de execução, um estado atual e ainda um conjunto de recursos associados.
+\vspace{-0.3cm}
+\paragraph{}
+O modelo escolhido para o trabalho foi o modelo de cinco estados sendo estes os estados \emph{New}, \emph{Ready}, \emph{Running}, \emph{Exit} e \emph{Blocked}. Estes estados apresentam como ou onde se encontra o processo, isto é, ou está preparado para ser executado, ou está a ser executado, se já terminou, bloqueado ou se é um novo processo, tendo em atenção que quando um processo está num dos estados (\emph{Ready} ou \emph{Blocked}) tem de estar contido numa \emph{queue} (fila de espera do tipo FIFO), quando o processo se encontra no estado \emph{Run} o escalonamento dos estados deve ser executado com o algoritmo \emph{Round Robin}). Este atribui uma porção de tempo (\emph{quantum time}) igual a cada processo para que este possa ser executado no processador (estado \emph{Run}) e, se ao fim desse tempo não for finalizada a execução desse processo, este passa para o estado \emph{BLOCK})e outro processo entra para o processador para se proceder à sua execução.
+\vspace{-0.3cm}
+\paragraph{}
+Posto isto, o objetivo é implementar um simulador de um Sistema Operativo considerando o modelo de 5 estados acima mencionado, utilizando a linguagem de programação C.
+
+\begin{center}
+    \section*{Programa}
+\end{center}
+Para este simulador são usadas três \emph{structs}:
+
+\begin{itemize}
+    \item \textbf{so} : Guarda todas as informações necessárias para o funcionamento do modelo de 5 estados, como os vários programas, \emph{quantum time} e as \emph{queues} que irão ser utilizadas;
+    \item \textbf{program} : Guarda todas as informações sobre um programa, como o estado em que se encontra, o ciclo do programa e a sua posição;
+    \item \textbf{queues} : Guarda todas as informações das diferentes \emph{queues};
+\end{itemize}
+\vspace{-0.3cm}
+\paragraph{}
+O nosso programa é composto por 11 funções:
+\begin{itemize}
+    \item \textbf{isEmpty}\\
+        Esta função recebe como argumento uma \emph{queue} e  verifica se uma \emph{queue} não contém programas;
+    \item \textbf{peek}\\
+        Esta função recebe como argumento uma \emph{queue} e devolve o primeiro programa da \emph{queue};
+    \item  \textbf{dequeue}\\
+        Esta função recebe como argumento uma \emph{queue} e remove o primeiro programa da \emph{queue};
+    \item \textbf{enequeue}\\
+        esta função recebe como argumento uma \emph{queue} e um \emph{programa} e coloca esse programa na respetiva \emph{queue}
+    \item  \textbf{getState}\\
+        Esta função recebe como argumento o id do programa e devolve o estado em que o programa se encontra;
+    \item \textbf{setState}\\
+        Esta função recebe como argumentos o id do programa e um estado e altera o estado do programa para o estado passado no argumento;
+    \item \textbf{getCycle}\\
+        Recebe como argumentos o id do programa e a posição do ciclo e devolve o valor do ciclo naquela posição;
+    \item \textbf{getNow}\\
+        Esta função recebe como argumento o id do programa e devolve a posição do ciclo em que o programa se encontra;
+    \item \textbf{changeProgram}\\
+        Esta função desempenha um papel muito importante no nosso Sistema Operativo, pois esta é responsável por alterar o estado dos nossos programas. Após receber o id do programa, esta vai analisar o estado em que o programa se encontra e determina o novo estado do programa.
+    \item \textbf{quantumChangeProgram}\\
+        Apenas usada quando o método de escalonamento é o \emph{Round-Robin}. É responsável por alterar o programa que atualmente se encontra no estado \emph{Run} por outro programa da \emph{queue ready}.
+    \item \textbf{printProgramState} \\
+        Esta função recebe como argumento o id do programa e imprime o estado atual em que o programa se encontra.
+    \item \textbf{run}\\
+        É fundamental para o funcionamento do modelo de 5 estados. É responsável pela execução dos nossos programas.
+        
+        Ao longo da sua execução vai imprimindo os instantes e os estados dos vários programas (recorrendo á \emph{printProgramState}). Submete ainda cada programa a um conjunto de condições com o objetivo de perceber se é necessário alterar o estado atual de cada programa.
+    \item \textbf{main}\\
+    Responsável por inicializar todas as estruturas necessárias para a execução dos programas.
+
+    
+\end{itemize}
+
+
+\begin{center}
+    \section*{Conclusão}
+\end{center}
+\paragraph{}
+A realização deste trabalho, permitiu consolidar e ampliar os nossos conhecimentos acerca de Sistemas Operativos, mais concretamente sobre os modelos de 5 estados, como estes funcionam e como são importantes para manter o bom funcionamento do mesmo.
+\paragraph{}
+Concluímos ainda que o \emph{Round-Robin} é um método vantajoso quando utilizado em processos mais curtos, mas quando surgem processos mais longos este revela-se ineficiente, devido ao facto de que se o \emph{quantum time} for inferior ao tempo de duração do processo, a execução deste é interrompida prematuramente. 
+
+\begin{center}
+    \section*{Bibliografia}
+\end{center}
+\paragraph{}
+Rato, Luís in "Aulas de Sistemas Operativos". 2022 in Universidade de Évora.
+\vspace{-0.3cm}
+\paragraph{}
+Rato, Luís in "Trabalho1-SO-2022.pdf". Universidade de Évora's MOODLE.
+\vspace{-0.3cm}
+\paragraph{}
+\url{https://www.e-konomista.pt/o-que-e-um-sistema-operativo/}
+\vspace{-0.3cm}
+\paragraph{}
+\url{https://science.jrank.org/programming/Multiprocessing_Operating_Syst.html}
+\vspace{-0.3cm}
+\paragraph{}
+\url{https://www.javatpoint.com/multiprocessing-operating-system}
+\end{document}

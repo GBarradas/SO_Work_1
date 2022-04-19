@@ -235,7 +235,7 @@ void run() {                                        //responsável pela execuç�
 
             if (getCycle(i,getNow(i)) == 0 && getState(i) == RUN) {       //caso o ciclo RUN tenha chegado ao fim                              
                 if (isEmpty(ready))                                              
-                    isProgramRunning = false;
+                    isProgramRunning = true;
                 changeProgram(i);
                 if(OS.isRR)
                     quantumProgram = OS.quantumTime;
@@ -279,13 +279,13 @@ void run() {                                        //responsável pela execuç�
 int main() {
     int programas[3][10] = {            //programas 
         {0, 3, 1, 2, 2, 4, 0, 0, 0, 0 } ,
-        {1, 4, 2, 4, 1, 1, 0, 0, 0, 0 } ,
-        {3, 2, 1, 6, 1, 3, 1, 1, 0, 0 } 
+        {4, 2, 1, 6, 1, 3, 1, 1, 0, 0 } , 
+        {5, 4, 2, 4, 1, 1, 0, 0, 0, 0 } 
     };
     int rows = 3;       
     int cols = 10;
 
-    OS.quantumTime = 2;         //inicializar o SO
+    OS.quantumTime = 4;         //inicializar o SO
     OS.numOfPrograms = rows;    //inicializar queues
     OS.queues.blockFront = -1;
     OS.queues.blockRear = -1;
